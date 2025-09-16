@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APPSHC - adverbio</title>
     <style>
-
         * {
             padding: 0;
             margin: 0;
@@ -20,7 +20,7 @@
             background-color: #273142;
         }
 
-        section{
+        section {
             max-width: fit-content;
             padding-inline: 2rem;
             height: 100vh;
@@ -86,7 +86,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .pular {
             background-color: #171717;
             border-radius: 9px;
@@ -113,10 +113,118 @@
             flex-direction: column;
             gap: 1.5rem;
         }
-
-
     </style>
+
+    <script>
+        const total = 36;
+        const itensPorColuna = 5;
+        let index = 1;
+        let timer = null;
+
+        function limparDestaques() {
+            for (let i = 1; i <= total; i++) {
+                const p = document.getElementById(`p${i}`);
+                if (p) p.classList.remove("selecionado");
+            }
+        }
+
+        function gotoIndex(novo) {
+            index = novo;
+            if (index < 1) index = 1;
+            if (index > total) index = 1;
+            limparDestaques();
+            const atual = document.getElementById(`p${index}`);
+            if (atual) atual.classList.add("selecionado");
+        }
+
+        function startCarousel() {
+            if (timer) clearInterval(timer);
+            timer = setInterval(() => {
+                gotoIndex(index);
+                index++;
+                if (index > total) index = 1;
+            }, 3400);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            gotoIndex(1);
+            startCarousel();
+
+            let piscada = false;
+
+            const btn = document.getElementById('btn-piscada') || document.querySelector('button');
+            if (!btn) return;
+
+            btn.addEventListener('click', () => {
+                const selecionada = document.querySelector('.palavra.selecionado');
+                if (!selecionada) return;
+
+                const id = selecionada.id || '';
+                const num = parseInt(id.replace(/^p/, ''), 10);
+                if (!Number.isFinite(num)) return;
+
+                if (timer) clearInterval(timer);
+
+                if (selecionada.classList.contains('pular')) {
+                    const colAtual = Math.floor((num - 1) / itensPorColuna);
+                    const totalColunas = Math.ceil(total / itensPorColuna);
+                    const proxCol = (colAtual + 1) % totalColunas;
+                    let novoIndex = proxCol * itensPorColuna + 1;
+                    if (novoIndex > total) novoIndex = 1;
+                    gotoIndex(novoIndex);
+                    startCarousel();
+                    return;
+                }
+
+                piscada = true;
+                tentarAdicionar();
+            });
+
+            function obterPalavraSelecionada() {
+                const box = document.querySelector('.palavra.selecionado');
+                if (!box) return null;
+                if (box.classList.contains('pular')) return null;
+                const p = box.querySelector('p');
+                const texto = p ? p.textContent.trim() : '';
+                return texto || null;
+            }
+
+            function tentarAdicionar() {
+                if (!piscada) return;
+                const texto = obterPalavraSelecionada();
+                if (texto) {
+                    let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
+                    lista.push(texto);
+                    localStorage.setItem('palavrasSelecionadas', JSON.stringify(lista));
+                    window.location.href = 'index.html';
+                }
+                piscada = false;
+                startCarousel();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!sessionStorage.getItem('sessaoAtiva')) {
+                localStorage.removeItem('palavrasSelecionadas');
+                sessionStorage.setItem('sessaoAtiva', 'true');
+            }
+
+            let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
+            if (lista.length > 0) {
+                const exibidores = document.querySelectorAll('.exibidor .subExibidor p');
+                let i = 0;
+                for (let slot of exibidores) {
+                    if (i >= lista.length) break;
+                    slot.textContent = lista[i];
+                    i++;
+                }
+            }
+        });
+
+    </script>
+
 </head>
+
 <body>
     <section>
         <h1>Pisque por <span>2 segundos</span> para adicionar à frase</h1>
@@ -244,32 +352,34 @@
                     </div>
                 </div>
             </div>
-            
+
 
         </div>
 
         <div class="exibidor">
 
-            <div class="subExibidor">
-                <p>Inconstitucionalidade</p>
-            </div>
-            <div class="subExibidor">
+            <div class="subExibidor" id="e1">
                 <p></p>
             </div>
-            <div class="subExibidor">
+            <div class="subExibidor" id="e2">
                 <p></p>
             </div>
-            <div class="subExibidor">
+            <div class="subExibidor" id="e3">
                 <p></p>
             </div>
-            <div class="subExibidor">
+            <div class="subExibidor" id="e4">
                 <p></p>
             </div>
-            <div class="subExibidor">
+            <div class="subExibidor" id="e5">
+                <p></p>
+            </div>
+            <div class="subExibidor" id="e6">
                 <p></p>
             </div>
 
         </div>
+        <button>piscada</button>
     </section>
 </body>
+
 </html>
