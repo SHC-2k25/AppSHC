@@ -68,27 +68,103 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
             if (!sessionStorage.getItem('sessaoAtiva')) {
                 localStorage.removeItem('palavrasSelecionadas');
                 sessionStorage.setItem('sessaoAtiva', 'true');
             }
 
-            let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
+            const classes = [
+                { nome: "Pronome", link: "./pages/pronome.html" },
+                { nome: "Substantivo", link: "./pages/substantivo.html" },
+                { nome: "Verbo", link: "./pages/verbo.html" },
+                { nome: "Adjetivo", link: "./pages/adjetivo.html" },
+                { nome: "Advérbio", link: "./pages/adverbio.html" }
+            ];
 
+            const exibidores = document.querySelectorAll('.exibidor .subExibidor p');
+            let slotAtual = 0;
+            let etapa = 0;
+            let palavraIndex = 0;
+            let timer;
+
+            let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
             if (lista.length > 0) {
-                const exibidores = document.querySelectorAll('.exibidor .subExibidor p');
-                let i = 0;
-                for (let slot of exibidores) {
-                    if (i >= lista.length) break;
-                    slot.textContent = lista[i];
-                    i++;
+                lista.forEach((texto, i) => {
+                    if (exibidores[i]) exibidores[i].textContent = texto;
+                });
+                slotAtual = lista.length;
+            }
+
+            function mostrarProximaPalavra() {
+                if (slotAtual >= exibidores.length) {
+                    setTimeout(resetSlots, 3400);
+                    return;
+                }
+
+                let palavra;
+                if (slotAtual === 0) {
+                    palavra = classes[palavraIndex].nome;
+                    palavraIndex = (palavraIndex + 1) % classes.length;
+                } else {
+                    if (etapa === 0) {
+                        palavra = "reset";
+                        etapa = 1;
+                    } else if (etapa === 1) {
+                        palavra = "concluir";
+                        etapa = 2;
+                    } else {
+                        palavra = classes[palavraIndex].nome;
+                        palavraIndex = (palavraIndex + 1) % classes.length;
+                    }
+                }
+
+                exibidores[slotAtual].textContent = palavra;
+            }
+
+            function avancarSlot() {
+                slotAtual++;
+                etapa = 0;
+            }
+
+            function resetSlots() {
+                exibidores.forEach(s => s.textContent = "");
+                localStorage.removeItem('palavrasSelecionadas');
+                slotAtual = 0;
+                etapa = 0;
+                palavraIndex = 0;
+            }
+
+            function startCarousel() {
+                clearInterval(timer);
+                timer = setInterval(mostrarProximaPalavra, 3400);
+            }
+
+            function handleTrigger() {
+                const palavra = exibidores[slotAtual].textContent;
+                if (palavra === "reset") {
+                    resetSlots();
+                    return;
+                }
+                if (palavra === "concluir") {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        resetSlots();
+                        startCarousel();
+                    }, 3900);
+                    return;
+                }
+                const classeObj = classes.find(c => c.nome === palavra);
+                if (classeObj) {
+                    window.location.href = classeObj.link;
                 }
             }
+
+            startCarousel();
+
+            document.querySelector('button').addEventListener('click', handleTrigger);
         });
     </script>
 
-    
 </head>
 
 <body>
@@ -123,6 +199,8 @@
         <a href="./pages/adverbio.html">adverbio</a>
         <a href="./pages/substantivo.html">substantivo</a>
         <a href="./pages/pronome.html">pronome</a>
+        <button>Entrar na classe</button>
+
     </section>
 </body>
 
