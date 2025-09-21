@@ -103,6 +103,7 @@
         .selecionado {
             box-shadow: 0px 0px 6px 5px #2CFFE6;
             transition: 0.3s ease;
+            transform: scale(1.03);
         }
 
         .container1 {
@@ -233,7 +234,6 @@
         <h1>Pisque por <span>2 segundos</span> para adicionar à frase</h1>
 
         <div class="palavras-conjunto">
-
             <div class="container1">
                 <div class="container2">
                     <div class="palavra pular" id="p1">
@@ -242,20 +242,22 @@
                     <div class="palavra" id="p2">
                         <p>Jesus é o caminho, a verdade e a vida</p>
                     </div>
-                    <div class="palavra" id="p36">
-                        <p>Socorro!</p>
-                    </div>
                     <div class="palavra" id="p3">
                         <p>Preciso ir ao banheiro</p>
                     </div>
-                    <div class="palavra" id="p7">
-                        <p>Estou com fome</p>
+                    <div class="palavra" id="p4">
+                        <p>Boa tarde/noite</p>
+                    </div>
+                    <div class="palavra" id="p5">
+                        <p>Bom dia</p>
                     </div>
                 </div>
-
                 <div class="container2">
                     <div class="palavra pular" id="p6">
                         <p>>> Pular >></p>
+                    </div>
+                    <div class="palavra" id="p7">
+                        <p>Estou com fome</p>
                     </div>
                     <div class="palavra" id="p8">
                         <p>Estou com sede</p>
@@ -266,67 +268,26 @@
                     <div class="palavra" id="p10">
                         <p>Estou com calor</p>
                     </div>
-                    <div class="palavra" id="p30">
-                        <p>Estou com dor</p>
-                    </div>
                 </div>
-
                 <div class="container2">
                     <div class="palavra pular" id="p11">
                         <p>>> Pular >></p>
                     </div>
-                    <div class="palavra" id="p5">
-                        <p>Bom dia</p>
-                    </div>
-                    <div class="palavra" id="p4">
-                        <p>Boa tarde/noite</p>
-                    </div>
                     <div class="palavra" id="p12">
                         <p>Como você está?</p>
-                    </div>
-                    <div class="palavra" id="p34">
-                        <p>Como foi seu dia?</p>
-                    </div>
-                </div>
-
-                <div class="container2">
-                    <div class="palavra pular" id="p16">
-                        <p>>> Pular >></p>
-                    </div>
-                    <div class="palavra" id="p31">
-                        <p>Fala mais devagar</p>
-                    </div>
-                    <div class="palavra" id="p35">
-                        <p>Não quero falar agora</p>
                     </div>
                     <div class="palavra" id="p13">
                         <p>Te amo muito</p>
                     </div>
-                    <div class="palavra" id="p25">
-                        <p>Estou feliz</p>
+                    <div class="palavra" id="p14">
+                        <p>Quero ver TV</p>
+                    </div>
+                    <div class="palavra" id="p15">
+                        <p>Quero sair</p>
                     </div>
                 </div>
-
                 <div class="container2">
-                    <div class="palavra pular" id="p21">
-                        <p>>> Pular >></p>
-                    </div>
-                    <div class="palavra" id="p28">
-                        <p>Estou triste</p>
-                    </div>
-                    <div class="palavra" id="p29">
-                        <p>Estou nervoso(a)</p>
-                    </div>
-                    <div class="palavra" id="p22">
-                        <p>Muito engraçado!</p>
-                    </div>
-                    <div class="palavra" id="p23">
-                        <p>Muito obrigado por tudo!</p>
-                    </div>
-                </div>
-
-                <div class="container2">
-                    <div class="palavra pular" id="p26">
+                    <div class="palavra pular" id="p16">
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p17">
@@ -342,26 +303,58 @@
                         <p>Qual a novidade?</p>
                     </div>
                 </div>
-
                 <div class="container2">
-                    <div class="palavra" id="p14">
-                        <p>Quero ver TV</p>
+                    <div class="palavra pular" id="p21">
+                        <p>>> Pular >></p>
                     </div>
-                    <div class="palavra" id="p15">
-                        <p>Quero sair</p>
+                    <div class="palavra" id="p22">
+                        <p>Muito engraçado!</p>
                     </div>
+                    <div class="palavra" id="p23">
+                        <p>Muito obrigado por tudo!</p>
+                    </div>
+                    <div class="palavra" id="p24">
+                        <p>Qual a novidade!</p>
+                    </div>
+                    <div class="palavra" id="p25">
+                        <p>Estou feliz</p>
+                    </div>
+                </div>
+                <div class="container2">
+                    <div class="palavra pular" id="p26">
+                        <p>>> Pular >></p>
+                    </div>
+                    <div class="palavra" id="p28">
+                        <p>Estou triste</p>
+                    </div>
+                    <div class="palavra" id="p29">
+                        <p>Estou nervoso(a)</p>
+                    </div>
+                    <div class="palavra" id="p30">
+                        <p>Estou com dor</p>
+                    </div>
+                    <div class="palavra" id="p31">
+                        <p>Fala mais devagar</p>
+                    </div>
+                </div>
+                <div class="container2">
                     <div class="palavra" id="p32">
                         <p>Apague/acenda a luz</p>
                     </div>
                     <div class="palavra" id="p33">
                         <p>Prazer em te conhecer</p>
                     </div>
-                    <div class="palavra" id="p24">
-                        <p>Qual a novidade!</p>
+                    <div class="palavra" id="p34">
+                        <p>Como foi seu dia?</p>
+                    </div>
+                    <div class="palavra" id="p35">
+                        <p>Não quero falar agora</p>
+                    </div>
+                    <div class="palavra" id="p36">
+                        <p>Socorro!</p>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="exibidor">

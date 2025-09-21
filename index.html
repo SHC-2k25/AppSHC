@@ -64,6 +64,13 @@
             justify-content: center;
             align-items: center;
         }
+
+        .selecionado {
+            box-shadow: 0px 0px 6px 5px #2CFFE6;
+            transition: 0.3s ease;
+            transform: scale(1.03);
+        }
+
     </style>
 
     <script>
@@ -83,6 +90,8 @@
             ];
 
             const exibidores = document.querySelectorAll('.exibidor .subExibidor p');
+            const exibidorContainer = document.querySelector('.exibidor'); // contêiner principal
+
             let slotAtual = 0;
             let etapa = 0;
             let palavraIndex = 0;
@@ -98,7 +107,13 @@
 
             function mostrarProximaPalavra() {
                 if (slotAtual >= exibidores.length) {
-                    setTimeout(resetSlots, 3400);
+                    // Todos completos → adiciona classe no contêiner
+                    exibidorContainer.classList.add("selecionado");
+
+                    setTimeout(() => {
+                        resetSlots();
+                        startCarousel();
+                    }, 3400);
                     return;
                 }
 
@@ -129,6 +144,7 @@
 
             function resetSlots() {
                 exibidores.forEach(s => s.textContent = "");
+                exibidorContainer.classList.remove("selecionado"); // remove destaque
                 localStorage.removeItem('palavrasSelecionadas');
                 slotAtual = 0;
                 etapa = 0;
@@ -148,6 +164,10 @@
                 }
                 if (palavra === "concluir") {
                     clearInterval(timer);
+
+                    // Marca o contêiner mesmo que não esteja 100% completo
+                    exibidorContainer.classList.add("selecionado");
+
                     setTimeout(() => {
                         resetSlots();
                         startCarousel();
