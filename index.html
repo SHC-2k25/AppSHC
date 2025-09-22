@@ -90,7 +90,7 @@
             ];
 
             const exibidores = document.querySelectorAll('.exibidor .subExibidor p');
-            const exibidorContainer = document.querySelector('.exibidor'); // contêiner principal
+            const exibidorContainer = document.querySelector('.exibidor');
 
             let slotAtual = 0;
             let etapa = 0;
@@ -107,7 +107,6 @@
 
             function mostrarProximaPalavra() {
                 if (slotAtual >= exibidores.length) {
-                    // Todos completos → adiciona classe no contêiner
                     exibidorContainer.classList.add("selecionado");
 
                     setTimeout(() => {
@@ -144,7 +143,7 @@
 
             function resetSlots() {
                 exibidores.forEach(s => s.textContent = "");
-                exibidorContainer.classList.remove("selecionado"); // remove destaque
+                exibidorContainer.classList.remove("selecionado");
                 localStorage.removeItem('palavrasSelecionadas');
                 slotAtual = 0;
                 etapa = 0;
@@ -165,7 +164,6 @@
                 if (palavra === "concluir") {
                     clearInterval(timer);
 
-                    // Marca o contêiner mesmo que não esteja 100% completo
                     exibidorContainer.classList.add("selecionado");
 
                     setTimeout(() => {
