@@ -121,6 +121,7 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
+        let subTimer = null;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -141,9 +142,34 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
+                if (index === 35) {
+                    clearInterval(timer);
+                    variarNumerosP35();
+                    return;
+                }
+
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
+            }, 3400);
+        }
+
+        function variarNumerosP35() {
+            let valor = 0;
+            const p35 = document.querySelector('#p35 p');
+
+            gotoIndex(35);
+            p35.textContent = valor;
+
+            subTimer = setInterval(() => {
+                valor++;
+                if (valor > 20) {
+                    clearInterval(subTimer);
+                    index = 36; 
+                    startCarousel();
+                    return;
+                }
+                p35.textContent = valor;
             }, 3400);
         }
 
@@ -165,6 +191,7 @@
                 if (!Number.isFinite(num)) return;
 
                 if (timer) clearInterval(timer);
+                if (subTimer) clearInterval(subTimer);
 
                 if (selecionada.classList.contains('pular')) {
                     const colAtual = Math.floor((num - 1) / itensPorColuna);
@@ -221,7 +248,6 @@
                 }
             }
         });
-
     </script>
 
 </head>
@@ -349,7 +375,7 @@
                         <p>100%</p>
                     </div>
                     <div class="palavra" id="p35">
-                        <p>0 ( zero )</p>
+                        <p>0</p>
                     </div>
                 </div>
             </div>

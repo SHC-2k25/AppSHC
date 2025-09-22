@@ -124,6 +124,7 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
+        let subTimer = null;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -144,9 +145,41 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
+                
+                if (index === 4) {
+                    clearInterval(timer);
+                    variarSlot(4, ["bom dia", "boa tarde", "boa noite"], 5);
+                    return;
+                }
+
+                if (index === 31) {
+                    clearInterval(timer);
+                    variarSlot(31, ["Acende a luz", "Apague a luz"], 32);
+                    return;
+                }
+
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
+            }, 3400);
+        }
+
+        function variarSlot(slotIndex, frases, proximoIndex) {
+            let pos = 0;
+            const pEl = document.querySelector(`#p${slotIndex} p`);
+
+            gotoIndex(slotIndex);
+            pEl.textContent = frases[pos];
+
+            subTimer = setInterval(() => {
+                pos++;
+                if (pos >= frases.length) {
+                    clearInterval(subTimer);
+                    index = proximoIndex;
+                    startCarousel();
+                    return;
+                }
+                pEl.textContent = frases[pos];
             }, 3400);
         }
 
@@ -168,6 +201,7 @@
                 if (!Number.isFinite(num)) return;
 
                 if (timer) clearInterval(timer);
+                if (subTimer) clearInterval(subTimer);
 
                 if (selecionada.classList.contains('pular')) {
                     const colAtual = Math.floor((num - 1) / itensPorColuna);
@@ -224,7 +258,6 @@
                 }
             }
         });
-
     </script>
 
 </head>
@@ -246,10 +279,10 @@
                         <p>Preciso ir ao banheiro</p>
                     </div>
                     <div class="palavra" id="p4">
-                        <p>Boa tarde/noite</p>
+                        <p>🌞🌆🌙</p>
                     </div>
                     <div class="palavra" id="p5">
-                        <p>Bom dia</p>
+                        <p>Estou curioso</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -339,7 +372,7 @@
                 </div>
                 <div class="container2">
                     <div class="palavra" id="p31">
-                        <p>Apague/acenda a luz</p>
+                        <p>💡</p>
                     </div>
                     <div class="palavra" id="p32">
                         <p>Prazer em te conhecer</p>
