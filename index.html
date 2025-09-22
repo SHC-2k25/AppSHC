@@ -122,10 +122,10 @@
                     palavraIndex = (palavraIndex + 1) % classes.length;
                 } else {
                     if (etapa === 0) {
-                        palavra = "reset";
+                        palavra = "r e s e t";
                         etapa = 1;
                     } else if (etapa === 1) {
-                        palavra = "concluir";
+                        palavra = "c o n c l u i r";
                         etapa = 2;
                     } else {
                         palavra = classes[palavraIndex].nome;
@@ -157,11 +157,11 @@
 
             function handleTrigger() {
                 const palavra = exibidores[slotAtual].textContent;
-                if (palavra === "reset") {
+                if (palavra === "r e s e t") {
                     resetSlots();
                     return;
                 }
-                if (palavra === "concluir") {
+                if (palavra === "c o n c l u i r") {
                     clearInterval(timer);
 
                     exibidorContainer.classList.add("selecionado");
