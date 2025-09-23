@@ -145,10 +145,34 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
-                
+
                 if (index === 4) {
                     clearInterval(timer);
-                    variarSlot(4, ["bom dia", "boa tarde", "boa noite"], 5);
+                    variarSlot(4, ["Bom dia", "Boa tarde", "Boa noite"], 5);
+                    return;
+                }
+
+                if (index === 8) {
+                    clearInterval(timer);
+                    variarSlot(8, ["Estou com fome", "Estou com sede"], 9);
+                    return;
+                }
+
+                if (index === 9) {
+                    clearInterval(timer);
+                    variarSlot(9, ["Estou com calor", "Estou com frio"], 10);
+                    return;
+                }
+
+                if (index === 12) {
+                    clearInterval(timer);
+                    variarSlot(12, ["Como você está?", "Como ele(a) está?", "Como eles(as) estão?", "Como vocês estão?" ], 13);
+                    return;
+                }
+
+                if (index === 25) {
+                    clearInterval(timer);
+                    variarSlot(25, ["Estou feliz", "Estou triste", "Estou nervoso(a)"], 26);
                     return;
                 }
 
@@ -273,16 +297,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p2">
-                        <p>Estou com fome</p>
+                        <p>Preciso ir ao banheiro</p>
                     </div>
                     <div class="palavra" id="p3">
-                        <p>Preciso ir ao banheiro</p>
+                        <p>Que horas são?</p>
                     </div>
                     <div class="palavra" id="p4">
                         <p>🌞🌆🌙</p>
                     </div>
                     <div class="palavra" id="p5">
-                        <p>Por favor</p>
+                        <p>Tchau!</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -293,13 +317,13 @@
                         <p>Não quero falar agora</p>
                     </div>
                     <div class="palavra" id="p8">
-                        <p>Estou com sede</p>
+                        <p>🍽️🥛</p>
                     </div>
                     <div class="palavra" id="p9">
-                        <p>Estou com frio</p>
+                        <p>🥵🥶</p>
                     </div>
                     <div class="palavra" id="p10">
-                        <p>Estou com calor</p>
+                        <p>Estou com </p>
                     </div>
                 </div>
                 <div class="container2">
@@ -350,7 +374,7 @@
                         <p>Qual a novidade!</p>
                     </div>
                     <div class="palavra" id="p25">
-                        <p>Estou feliz</p>
+                        <p>😄😢</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -358,10 +382,10 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p27">
-                        <p>Estou triste</p>
+                        <p>Por favor</p>
                     </div>
                     <div class="palavra" id="p28">
-                        <p>Estou nervoso(a)</p>
+                        <p>Eu preciso disso</p>
                     </div>
                     <div class="palavra" id="p29">
                         <p>Estou com dor</p>

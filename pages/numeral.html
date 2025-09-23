@@ -142,6 +142,12 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
+                if (index === 2) {
+                    clearInterval(timer);
+                    variarNumerosP2();
+                    return;
+                }
+
                 if (index === 35) {
                     clearInterval(timer);
                     variarNumerosP35();
@@ -151,6 +157,25 @@
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
+            }, 3400);
+        }
+
+        function variarNumerosP2() {
+            let valor = 1;
+            const p2 = document.querySelector('#p2 p');
+
+            gotoIndex(2);
+            p2.textContent = valor + "º";
+
+            subTimer = setInterval(() => {
+                valor++;
+                if (valor > 7) {
+                    clearInterval(subTimer);
+                    index = 3;
+                    startCarousel();
+                    return;
+                }
+                p2.textContent = valor + "º";
             }, 3400);
         }
 
@@ -165,7 +190,7 @@
                 valor++;
                 if (valor > 20) {
                     clearInterval(subTimer);
-                    index = 36; 
+                    index = 36;
                     startCarousel();
                     return;
                 }
@@ -264,7 +289,7 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p2">
-                        <p>Um</p>
+                        <p>o r d i n a i s</p>
                     </div>
                     <div class="palavra" id="p3">
                         <p>Dois</p>

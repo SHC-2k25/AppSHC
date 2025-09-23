@@ -122,6 +122,7 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
+        let subTimer = null;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -142,9 +143,34 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
+                if (index === 34) {
+                    clearInterval(timer);
+                    variarSlot(34, ["Mãe", "Pai", "Irmão(a)", "Tio(a)", "Primo(a)", "Avô(ó)", "Neto(a)", "Cunhado(a)", "Nora", "Genro"], 35);
+                    return;
+                }
+
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
+            }, 3400);
+        }
+
+        function variarSlot(slotIndex, frases, proximoIndex) {
+            let pos = 0;
+            const pEl = document.querySelector(`#p${slotIndex} p`);
+
+            gotoIndex(slotIndex);
+            pEl.textContent = frases[pos];
+
+            subTimer = setInterval(() => {
+                pos++;
+                if (pos >= frases.length) {
+                    clearInterval(subTimer);
+                    index = proximoIndex;
+                    startCarousel();
+                    return;
+                }
+                pEl.textContent = frases[pos];
             }, 3400);
         }
 
@@ -166,6 +192,7 @@
                 if (!Number.isFinite(num)) return;
 
                 if (timer) clearInterval(timer);
+                if (subTimer) clearInterval(subTimer);
 
                 if (selecionada.classList.contains('pular')) {
                     const colAtual = Math.floor((num - 1) / itensPorColuna);
@@ -222,7 +249,6 @@
                 }
             }
         });
-
     </script>
 
 </head>
@@ -238,16 +264,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p2">
-                        <p>Mãe</p>
+                        <p>M</p>
                     </div>
                     <div class="palavra" id="p3">
-                        <p>Pai</p>
+                        <p>P</p>
                     </div>
                     <div class="palavra" id="p4">
-                        <p>Filho(a)</p>
+                        <p>F</p>
                     </div>
                     <div class="palavra" id="p5">
-                        <p>Irmã(o)</p>
+                        <p>I</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -255,13 +281,13 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p7">
-                        <p>Tio(a)</p>
+                        <p>T</p>
                     </div>
                     <div class="palavra" id="p8">
-                        <p>Neto(a)</p>
+                        <p>N</p>
                     </div>
                     <div class="palavra" id="p9">
-                        <p>Primo(a)</p>
+                        <p>P</p>
                     </div>
                     <div class="palavra" id="p10">
                         <p>Criança</p>
@@ -346,7 +372,7 @@
                         <p>Lua</p>
                     </div>
                     <div class="palavra" id="p34">
-                        <p>Livro</p>
+                        <p>p a r e n t e s</p>
                     </div>
                     <div class="palavra" id="p35">
                         <p>Deus</p>
