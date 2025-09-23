@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APPSHC - frase pronta</title>
-
+    <title>APPSHC - emoji</title>
     <style>
         * {
             padding: 0;
@@ -80,13 +79,12 @@
         .palavra {
             background-color: #227298;
             border-radius: 9px;
-            width: fit-content;
+            width: 250px;
             padding-inline: 2rem;
             padding-block: 1.2rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
         }
 
         .pular {
@@ -113,7 +111,6 @@
 
         .container2 {
             display: flex;
-            align-items: center;
             flex-direction: column;
             gap: 1.5rem;
         }
@@ -124,7 +121,6 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
-        let subTimer = null;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -145,41 +141,9 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
-                
-                if (index === 4) {
-                    clearInterval(timer);
-                    variarSlot(4, ["bom dia", "boa tarde", "boa noite"], 5);
-                    return;
-                }
-
-                if (index === 31) {
-                    clearInterval(timer);
-                    variarSlot(31, ["Acende a luz", "Apague a luz"], 32);
-                    return;
-                }
-
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
-            }, 3400);
-        }
-
-        function variarSlot(slotIndex, frases, proximoIndex) {
-            let pos = 0;
-            const pEl = document.querySelector(`#p${slotIndex} p`);
-
-            gotoIndex(slotIndex);
-            pEl.textContent = frases[pos];
-
-            subTimer = setInterval(() => {
-                pos++;
-                if (pos >= frases.length) {
-                    clearInterval(subTimer);
-                    index = proximoIndex;
-                    startCarousel();
-                    return;
-                }
-                pEl.textContent = frases[pos];
             }, 3400);
         }
 
@@ -201,7 +165,6 @@
                 if (!Number.isFinite(num)) return;
 
                 if (timer) clearInterval(timer);
-                if (subTimer) clearInterval(subTimer);
 
                 if (selecionada.classList.contains('pular')) {
                     const colAtual = Math.floor((num - 1) / itensPorColuna);
@@ -258,6 +221,7 @@
                 }
             }
         });
+
     </script>
 
 </head>
@@ -267,22 +231,23 @@
         <h1>Pisque por <span>2 segundos</span> para adicionar à frase</h1>
 
         <div class="palavras-conjunto">
+
             <div class="container1">
                 <div class="container2">
                     <div class="palavra pular" id="p1">
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p2">
-                        <p>Estou com fome</p>
+                        <p>😃</p>
                     </div>
                     <div class="palavra" id="p3">
-                        <p>Preciso ir ao banheiro</p>
+                        <p>😢</p>
                     </div>
                     <div class="palavra" id="p4">
-                        <p>🌞🌆🌙</p>
+                        <p>😱</p>
                     </div>
                     <div class="palavra" id="p5">
-                        <p>Por favor</p>
+                        <p>😴</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -290,16 +255,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p7">
-                        <p>Não quero falar agora</p>
+                        <p>🤔</p>
                     </div>
                     <div class="palavra" id="p8">
-                        <p>Estou com sede</p>
+                        <p>😡</p>
                     </div>
                     <div class="palavra" id="p9">
-                        <p>Estou com frio</p>
+                        <p>😭</p>
                     </div>
                     <div class="palavra" id="p10">
-                        <p>Estou com calor</p>
+                        <p>🙄</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -307,16 +272,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p12">
-                        <p>Como você está?</p>
+                        <p>🥳</p>
                     </div>
                     <div class="palavra" id="p13">
-                        <p>Te amo muito</p>
+                        <p>🤒</p>
                     </div>
                     <div class="palavra" id="p14">
-                        <p>Quero ver TV</p>
+                        <p>🎨</p>
                     </div>
                     <div class="palavra" id="p15">
-                        <p>Estou curioso!</p>
+                        <p>🎅</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -324,16 +289,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p17">
-                        <p>Leia um livro para mim</p>
+                        <p>😎</p>
                     </div>
                     <div class="palavra" id="p18">
-                        <p>Coloca música</p>
+                        <p>🤝</p>
                     </div>
                     <div class="palavra" id="p19">
-                        <p>Me mostra o celular</p>
+                        <p>🌡️</p>
                     </div>
                     <div class="palavra" id="p20">
-                        <p>Qual a novidade?</p>
+                        <p>🧊</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -341,16 +306,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p22">
-                        <p>Muito engraçado!</p>
+                        <p>🌻</p>
                     </div>
                     <div class="palavra" id="p23">
-                        <p>Muito obrigado por tudo!</p>
+                        <p>💈</p>
                     </div>
                     <div class="palavra" id="p24">
-                        <p>Qual a novidade!</p>
+                        <p>❔</p>
                     </div>
                     <div class="palavra" id="p25">
-                        <p>Estou feliz</p>
+                        <p>🚗</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -358,36 +323,38 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p27">
-                        <p>Estou triste</p>
+                        <p>✔️</p>
                     </div>
                     <div class="palavra" id="p28">
-                        <p>Estou nervoso(a)</p>
+                        <p>❌</p>
                     </div>
                     <div class="palavra" id="p29">
-                        <p>Estou com dor</p>
+                        <p>❤️</p>
                     </div>
                     <div class="palavra" id="p30">
-                        <p>Fala mais devagar</p>
+                        <p>🖤</p>
                     </div>
                 </div>
                 <div class="container2">
                     <div class="palavra" id="p31">
-                        <p>💡</p>
+                        <p>🧦</p>
                     </div>
                     <div class="palavra" id="p32">
-                        <p>Prazer em te conhecer</p>
+                        <p>🚿</p>
                     </div>
                     <div class="palavra" id="p33">
-                        <p>Como foi seu dia?</p>
+                        <p>🏀</p>
                     </div>
                     <div class="palavra" id="p34">
-                        <p>Jesus é o caminho, a verdade e a vida</p>
+                        <p>🏐</p>
                     </div>
                     <div class="palavra" id="p35">
-                        <p>Socorro!</p>
+                        <p>⚽</p>
                     </div>
                 </div>
             </div>
+
+
         </div>
 
         <div class="exibidor">
