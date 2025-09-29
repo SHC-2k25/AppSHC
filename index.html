@@ -70,10 +70,36 @@
             transition: 0.3s ease;
             transform: scale(1.03);
         }
-
     </style>
 
     <script>
+        function falarTexto(texto) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = 'pt-BR';
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        let vozDesbloqueada = false;
+        function desbloquearVoz() {
+            if (!vozDesbloqueada && 'speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance('');
+                utterance.lang = 'pt-BR';
+                speechSynthesis.speak(utterance);
+                vozDesbloqueada = true;
+            }
+        }
+
+        function ehApenasEmoji(texto) {
+            const t = (texto || '').trim();
+            if (!t) return false;
+            const temEmoji = /[\p{Emoji}\u200d]/u.test(t);
+            const temAlphaNum = /[A-Za-zÀ-ÖØ-öø-ÿ0-9]/.test(t);
+            return temEmoji && !temAlphaNum;
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             if (!sessionStorage.getItem('sessaoAtiva')) {
                 localStorage.removeItem('palavrasSelecionadas');
@@ -87,7 +113,7 @@
                 { nome: "Verbo", link: "./pages/verbo.html" },
                 { nome: "Adjetivo", link: "./pages/adjetivo.html" },
                 { nome: "Advérbio", link: "./pages/adverbio.html" },
-                { nome: "Emoji 🙂", link: "./pages/emoji.html" }
+                { nome: "Emoji", link: "./pages/emoji.html" }
             ];
 
             const exibidores = document.querySelectorAll('.exibidor .subExibidor p');
@@ -109,6 +135,19 @@
             function mostrarProximaPalavra() {
                 if (slotAtual >= exibidores.length) {
                     exibidorContainer.classList.add("selecionado");
+
+                    let frase = Array.from(exibidores)
+                        .map(p => p.textContent.trim())
+                        .filter(t =>
+                            t.length > 0 &&
+                            t !== "c o n c l u i r" &&
+                            t !== "r e s e t" &&
+                            !ehApenasEmoji(t)
+                        )
+                        .join(" ");
+                    if (frase) {
+                        falarTexto(frase);
+                    }
 
                     setTimeout(() => {
                         resetSlots();
@@ -135,6 +174,7 @@
                 }
 
                 exibidores[slotAtual].textContent = palavra;
+
             }
 
             function avancarSlot() {
@@ -157,6 +197,8 @@
             }
 
             function handleTrigger() {
+                desbloquearVoz();
+
                 const palavra = exibidores[slotAtual].textContent;
                 if (palavra === "r e s e t") {
                     resetSlots();
@@ -164,8 +206,20 @@
                 }
                 if (palavra === "c o n c l u i r") {
                     clearInterval(timer);
-
                     exibidorContainer.classList.add("selecionado");
+
+                    let frase = Array.from(exibidores)
+                        .map(p => p.textContent.trim())
+                        .filter(t =>
+                            t.length > 0 &&
+                            t !== "c o n c l u i r" &&
+                            t !== "r e s e t" &&
+                            !ehApenasEmoji(t)
+                        )
+                        .join(" ");
+                    if (frase) {
+                        falarTexto(frase);
+                    }
 
                     setTimeout(() => {
                         resetSlots();

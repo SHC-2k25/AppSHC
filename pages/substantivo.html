@@ -149,6 +149,18 @@
                     return;
                 }
 
+                if (index === 13) {
+                    clearInterval(timer);
+                    variarSlot(13, ["Homem", "Menino"], 14);
+                    return;
+                }
+
+                if (index === 14) {
+                    clearInterval(timer);
+                    variarSlot(14, ["Mulher", "Menina"], 15);
+                    return;
+                }
+
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
