@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APPSHC - pronome</title>
+    <title>APPSHC - numeral</title>
     <style>
         * {
             padding: 0;
@@ -104,7 +104,6 @@
             transform: scale(1.03);
         }
 
-
         .container1 {
             display: flex;
             gap: 1rem;
@@ -122,6 +121,7 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
+        let subTimer = null;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -142,10 +142,60 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
+                if (index === 2) {
+                    clearInterval(timer);
+                    variarNumerosP2();
+                    return;
+                }
+
+                if (index === 35) {
+                    clearInterval(timer);
+                    variarNumerosP35();
+                    return;
+                }
+
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
             }, 3400);
+        }
+
+        function variarNumerosP2() {
+            let valor = 1;
+            const p2 = document.querySelector('#p2 p');
+
+            gotoIndex(2);
+            p2.textContent = valor + "º";
+
+            subTimer = setInterval(() => {
+                valor++;
+                if (valor > 7) {
+                    clearInterval(subTimer);
+                    index = 3;
+                    startCarousel();
+                    return;
+                }
+                p2.textContent = valor + "º";
+            }, 3200);
+        }
+
+        function variarNumerosP35() {
+            let valor = 0;
+            const p35 = document.querySelector('#p35 p');
+
+            gotoIndex(35);
+            p35.textContent = valor;
+
+            subTimer = setInterval(() => {
+                valor++;
+                if (valor > 20) {
+                    clearInterval(subTimer);
+                    index = 36;
+                    startCarousel();
+                    return;
+                }
+                p35.textContent = valor;
+            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -166,6 +216,7 @@
                 if (!Number.isFinite(num)) return;
 
                 if (timer) clearInterval(timer);
+                if (subTimer) clearInterval(subTimer);
 
                 if (selecionada.classList.contains('pular')) {
                     const colAtual = Math.floor((num - 1) / itensPorColuna);
@@ -222,7 +273,6 @@
                 }
             }
         });
-
     </script>
 
 </head>
@@ -239,16 +289,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p2">
-                        <p>Eu</p>
+                        <p>o r d i n a i s</p>
                     </div>
                     <div class="palavra" id="p3">
-                        <p>Você</p>
+                        <p>Dois</p>
                     </div>
                     <div class="palavra" id="p4">
-                        <p>Ele(a)</p>
+                        <p>Três</p>
                     </div>
                     <div class="palavra" id="p5">
-                        <p>Nós</p>
+                        <p>Quatro</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -256,16 +306,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p7">
-                        <p>Vocês</p>
+                        <p>Cinco</p>
                     </div>
                     <div class="palavra" id="p8">
-                        <p>Eles(as)</p>
+                        <p>Seis</p>
                     </div>
                     <div class="palavra" id="p9">
-                        <p>Meu / Minha</p>
+                        <p>Sete</p>
                     </div>
                     <div class="palavra" id="p10">
-                        <p>Teu / Tua</p>
+                        <p>Oito</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -273,16 +323,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p12">
-                        <p>Seu / Sua</p>
+                        <p>Nove</p>
                     </div>
                     <div class="palavra" id="p13">
-                        <p>Nosso(a)</p>
+                        <p>Dez</p>
                     </div>
                     <div class="palavra" id="p14">
-                        <p>Deles(as)</p>
+                        <p>Cem</p>
                     </div>
                     <div class="palavra" id="p15">
-                        <p>Este(a)</p>
+                        <p>Mil</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -290,16 +340,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p17">
-                        <p>Esse(a)</p>
+                        <p>Milhões</p>
                     </div>
                     <div class="palavra" id="p18">
-                        <p>Aquele(a)</p>
+                        <p>+ ( somar )</p>
                     </div>
                     <div class="palavra" id="p19">
-                        <p>Isto / Isso</p>
+                        <p>- ( subtrair )</p>
                     </div>
                     <div class="palavra" id="p20">
-                        <p>Aquilo</p>
+                        <p>x ( multiplicar )</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -307,16 +357,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p22">
-                        <p>Alguém</p>
+                        <p>÷ ( dividir )</p>
                     </div>
                     <div class="palavra" id="p23">
-                        <p>Ninguém</p>
+                        <p>= ( igual )</p>
                     </div>
                     <div class="palavra" id="p24">
-                        <p>Tudo</p>
+                        <p>≠ ( diferente )</p>
                     </div>
                     <div class="palavra" id="p25">
-                        <p>Nada</p>
+                        <p>± (mais ou menos)</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -324,33 +374,33 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p27">
-                        <p>Algo</p>
+                        <p>∞</p>
                     </div>
                     <div class="palavra" id="p28">
-                        <p>Cada</p>
+                        <p>R$</p>
                     </div>
                     <div class="palavra" id="p29">
-                        <p>Outro(a)</p>
+                        <p>1%</p>
                     </div>
                     <div class="palavra" id="p30">
-                        <p>Alguns / Algumas</p>
+                        <p>10%</p>
                     </div>
                 </div>
                 <div class="container2">
                     <div class="palavra" id="p31">
-                        <p>Quem</p>
+                        <p>20%</p>
                     </div>
                     <div class="palavra" id="p32">
-                        <p>Que / O que</p>
+                        <p>25%</p>
                     </div>
                     <div class="palavra" id="p33">
-                        <p>Qual</p>
+                        <p>50%</p>
                     </div>
                     <div class="palavra" id="p34">
-                        <p>Onde</p>
+                        <p>100%</p>
                     </div>
                     <div class="palavra" id="p35">
-                        <p>Todo o mundo</p>
+                        <p>0</p>
                     </div>
                 </div>
             </div>
@@ -382,6 +432,7 @@
         </div>
         <button>piscada</button>
     </section>
+    <script src="../script.js"></script>
 </body>
 
 </html>

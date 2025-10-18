@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APPSHC - verbo</title>
+    <title>APPSHC - adverbio</title>
     <style>
         * {
             padding: 0;
@@ -64,7 +64,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
         }
 
         .palavras-conjunto {
@@ -86,7 +85,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
         }
 
         .pular {
@@ -123,39 +121,6 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
-        let subTimer = null;
-
-        const conjugacoes = {
-            2: ["Ser / é", "Foi", "Será"],
-            3: ["Estar / está", "Esteve", "Estará"],
-            4: ["Ter / tem", "Teve", "Terá"],
-            5: ["Comer / come", "Comeu", "Comerá"],
-            7: ["Beber / bebe", "Bebeu", "Beberá"],
-            8: ["Dormir / dorme", "Dormiu", "Dormirá"],
-            9: ["Amar / ama", "Amou", "Amará"],
-            10: ["Gostar / gosta", "Gostou", "Gostará"],
-            12: ["Trabalhar / trabalha", "Trabalhou", "Trabalhará"],
-            13: ["Ir / vai", "Foi", "Irá"],
-            14: ["Vir / vem", "Veio", "Virá"],
-            15: ["Fazer / faz", "Fez", "Fará"],
-            17: ["Dar / dá", "Deu", "Dará"],
-            18: ["Dizer / diz", "Disse", "Dirá"],
-            19: ["Falar / fala", "Falou", "Falará"],
-            20: ["Ver / vê", "Viu", "Verá"],
-            22: ["Ouvir / ouve", "Ouviu", "Ouvirá"],
-            23: ["Saber / sabe", "Soube", "Saberá"],
-            24: ["Querer / quer", "Quis", "Quererá"],
-            25: ["Começar / começa", "Começou", "Começará"],
-            27: ["Terminar / termina", "Terminou", "Terminará"],
-            28: ["Sentir / sente", "Sentiu", "Sentirá"],
-            29: ["Precisar / precisa", "Precisou", "Precisará"],
-            30: ["Voltar / volta", "Voltou", "Voltará"],
-            31: ["Entender / entende", "Entendeu", "Entenderá"],
-            32: ["Ler / lê", "Leu", "Lerá"],
-            33: ["Escrever / escreve", "Escreveu", "Escreverá"],
-            34: ["Pôr / põe", "Pôs", "Porá"],
-            35: ["Levar / leva", "Levou", "Levará"]
-        };
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -176,35 +141,10 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
-                if (conjugacoes[index]) {
-                    clearInterval(timer);
-                    variarVerbo(index, conjugacoes[index], index + 1);
-                    return;
-                }
-
                 gotoIndex(index);
                 index++;
                 if (index > total) index = 1;
             }, 3200);
-        }
-
-        function variarVerbo(slotIndex, formas, proximoIndex) {
-            let pos = 0;
-            const pEl = document.querySelector(`#p${slotIndex} p`);
-
-            gotoIndex(slotIndex);
-            pEl.textContent = formas[pos];
-
-            subTimer = setInterval(() => {
-                pos++;
-                if (pos >= formas.length) {
-                    clearInterval(subTimer);
-                    index = proximoIndex;
-                    startCarousel();
-                    return;
-                }
-                pEl.textContent = formas[pos];
-            }, 3000);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -225,7 +165,6 @@
                 if (!Number.isFinite(num)) return;
 
                 if (timer) clearInterval(timer);
-                if (subTimer) clearInterval(subTimer);
 
                 if (selecionada.classList.contains('pular')) {
                     const colAtual = Math.floor((num - 1) / itensPorColuna);
@@ -282,6 +221,7 @@
                 }
             }
         });
+
     </script>
 
 </head>
@@ -298,16 +238,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p2">
-                        <p>Ser / é</p>
+                        <p>Sim</p>
                     </div>
                     <div class="palavra" id="p3">
-                        <p>Estar / está</p>
+                        <p>Não</p>
                     </div>
                     <div class="palavra" id="p4">
-                        <p>Ter / tem</p>
+                        <p>Agora</p>
                     </div>
                     <div class="palavra" id="p5">
-                        <p>Comer / come</p>
+                        <p>Hoje</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -315,16 +255,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p7">
-                        <p>Beber / bebe</p>
+                        <p>Ontem</p>
                     </div>
                     <div class="palavra" id="p8">
-                        <p>Dormir / dorme</p>
+                        <p>Amanhã</p>
                     </div>
                     <div class="palavra" id="p9">
-                        <p>Amar / ama</p>
+                        <p>Sempre</p>
                     </div>
                     <div class="palavra" id="p10">
-                        <p>Gostar / gosta</p>
+                        <p>Nunca</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -332,16 +272,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p12">
-                        <p>Trabalhar/ trabalha</p>
+                        <p>Já</p>
                     </div>
                     <div class="palavra" id="p13">
-                        <p>Ir / vai</p>
+                        <p>Ainda</p>
                     </div>
                     <div class="palavra" id="p14">
-                        <p>Vir / vem</p>
+                        <p>Logo</p>
                     </div>
                     <div class="palavra" id="p15">
-                        <p>Fazer / faz</p>
+                        <p>Depois</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -349,16 +289,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p17">
-                        <p>Dar / dá</p>
+                        <p>Certamente</p>
                     </div>
                     <div class="palavra" id="p18">
-                        <p>Dizer / diz</p>
+                        <p>Provavelmente</p>
                     </div>
                     <div class="palavra" id="p19">
-                        <p>Falar / fala</p>
+                        <p>Aqui</p>
                     </div>
                     <div class="palavra" id="p20">
-                        <p>Ver / vê</p>
+                        <p>Aí</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -366,16 +306,16 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p22">
-                        <p>Ouvir / ouve</p>
+                        <p>Dentro</p>
                     </div>
                     <div class="palavra" id="p23">
-                        <p>Saber / sabe</p>
+                        <p>Fora</p>
                     </div>
                     <div class="palavra" id="p24">
-                        <p>Querer / quer</p>
+                        <p>Em cima</p>
                     </div>
                     <div class="palavra" id="p25">
-                        <p>Começar / começa</p>
+                        <p>Embaixo</p>
                     </div>
                 </div>
                 <div class="container2">
@@ -383,36 +323,37 @@
                         <p>>> Pular >></p>
                     </div>
                     <div class="palavra" id="p27">
-                        <p>Terminar / termina</p>
+                        <p>Assim</p>
                     </div>
                     <div class="palavra" id="p28">
-                        <p>Sentir / sente</p>
+                        <p>Muito</p>
                     </div>
                     <div class="palavra" id="p29">
-                        <p>Precisar / precisa</p>
+                        <p>Pouco</p>
                     </div>
                     <div class="palavra" id="p30">
-                        <p>Voltar / volta</p>
+                        <p>Quase</p>
                     </div>
                 </div>
                 <div class="container2">
                     <div class="palavra" id="p31">
-                        <p>Entender / entende</p>
+                        <p>Também</p>
                     </div>
                     <div class="palavra" id="p32">
-                        <p>Ler / lê</p>
+                        <p>Melhor</p>
                     </div>
                     <div class="palavra" id="p33">
-                        <p>Escrever / escreve</p>
+                        <p>Pior</p>
                     </div>
                     <div class="palavra" id="p34">
-                        <p>Pôr / põe</p>
+                        <p>Cedo</p>
                     </div>
                     <div class="palavra" id="p35">
-                        <p>Levar / leva</p>
+                        <p>Só / Somente</p>
                     </div>
                 </div>
             </div>
+
 
         </div>
 
@@ -440,6 +381,7 @@
         </div>
         <button>piscada</button>
     </section>
+    <script src="../script.js"></script>
 </body>
 
 </html>
