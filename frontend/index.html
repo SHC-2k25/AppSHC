@@ -73,7 +73,6 @@
     </style>
 
     <script>
-
         function falarTexto(texto) {
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(texto);
@@ -175,7 +174,6 @@
                 }
 
                 exibidores[slotAtual].textContent = palavra;
-
             }
 
             function avancarSlot() {
@@ -197,7 +195,8 @@
                 timer = setInterval(mostrarProximaPalavra, 3400);
             }
 
-            function handleTrigger() {
+            // 🔥 Tornando global:
+            window.handleTrigger = function () {
                 desbloquearVoz();
 
                 const palavra = exibidores[slotAtual].textContent;
@@ -232,11 +231,11 @@
                 if (classeObj) {
                     window.location.href = classeObj.link;
                 }
-            }
+            };
 
             startCarousel();
 
-            document.querySelector('button').addEventListener('click', handleTrigger);
+            document.querySelector('button').addEventListener('click', window.handleTrigger);
         });
     </script>
 
