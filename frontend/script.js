@@ -1,6 +1,6 @@
 // Produção (site HTTPS): "wss://SEU_BACKEND/?from=site"
 // Dev local:             "ws://localhost:8080/?from=site"
-const ENDERECO_WS = "wss://localhost:8080/?from=site"
+const ENDERECO_WS = "wss://app-shc-back.vercel.app/?from=site"
 
 let conexaoWs
 
