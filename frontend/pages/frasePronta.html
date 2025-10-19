@@ -125,6 +125,7 @@
         let index = 1;
         let timer = null;
         let subTimer = null;
+        let piscada = false;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -145,37 +146,31 @@
         function startCarousel() {
             if (timer) clearInterval(timer);
             timer = setInterval(() => {
-
                 if (index === 4) {
                     clearInterval(timer);
                     variarSlot(4, ["Bom dia", "Boa tarde", "Boa noite"], 5);
                     return;
                 }
-
                 if (index === 8) {
                     clearInterval(timer);
                     variarSlot(8, ["Estou com fome", "Estou com sede"], 9);
                     return;
                 }
-
                 if (index === 9) {
                     clearInterval(timer);
                     variarSlot(9, ["Estou com calor", "Estou com frio"], 10);
                     return;
                 }
-
                 if (index === 12) {
                     clearInterval(timer);
-                    variarSlot(12, ["Como está?", "Como estão?" ], 13);
+                    variarSlot(12, ["Como está?", "Como estão?"], 13);
                     return;
                 }
-
                 if (index === 25) {
                     clearInterval(timer);
                     variarSlot(25, ["Estou feliz", "Estou triste", "Estou nervoso(a)"], 26);
                     return;
                 }
-
                 if (index === 31) {
                     clearInterval(timer);
                     variarSlot(31, ["Acende a luz", "Apague a luz"], 32);
@@ -207,61 +202,63 @@
             }, 3000);
         }
 
+        function obterPalavraSelecionada() {
+            const box = document.querySelector('.palavra.selecionado');
+            if (!box) return null;
+            if (box.classList.contains('pular')) return null;
+            const p = box.querySelector('p');
+            const texto = p ? p.textContent.trim() : '';
+            return texto || null;
+        }
+
+        function tentarAdicionar() {
+            if (!piscada) return;
+            const texto = obterPalavraSelecionada();
+            if (texto) {
+                let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
+                lista.push(texto);
+                localStorage.setItem('palavrasSelecionadas', JSON.stringify(lista));
+                window.location.href = '../index.html';
+            }
+            piscada = false;
+            startCarousel();
+        }
+
+        // 🔥 Função global para piscada
+        window.handleTrigger = function () {
+            const selecionada = document.querySelector('.palavra.selecionado');
+            if (!selecionada) return;
+
+            const id = selecionada.id || '';
+            const num = parseInt(id.replace(/^p/, ''), 10);
+            if (!Number.isFinite(num)) return;
+
+            if (timer) clearInterval(timer);
+            if (subTimer) clearInterval(subTimer);
+
+            if (selecionada.classList.contains('pular')) {
+                const colAtual = Math.floor((num - 1) / itensPorColuna);
+                const totalColunas = Math.ceil(total / itensPorColuna);
+                const proxCol = (colAtual + 1) % totalColunas;
+                let novoIndex = proxCol * itensPorColuna + 1;
+                if (novoIndex > total) novoIndex = 1;
+                gotoIndex(novoIndex);
+                startCarousel();
+                return;
+            }
+
+            piscada = true;
+            tentarAdicionar();
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             gotoIndex(1);
             startCarousel();
 
-            let piscada = false;
-
+            // botão também chama handleTrigger
             const btn = document.getElementById('btn-piscada') || document.querySelector('button');
-            if (!btn) return;
-
-            btn.addEventListener('click', () => {
-                const selecionada = document.querySelector('.palavra.selecionado');
-                if (!selecionada) return;
-
-                const id = selecionada.id || '';
-                const num = parseInt(id.replace(/^p/, ''), 10);
-                if (!Number.isFinite(num)) return;
-
-                if (timer) clearInterval(timer);
-                if (subTimer) clearInterval(subTimer);
-
-                if (selecionada.classList.contains('pular')) {
-                    const colAtual = Math.floor((num - 1) / itensPorColuna);
-                    const totalColunas = Math.ceil(total / itensPorColuna);
-                    const proxCol = (colAtual + 1) % totalColunas;
-                    let novoIndex = proxCol * itensPorColuna + 1;
-                    if (novoIndex > total) novoIndex = 1;
-                    gotoIndex(novoIndex);
-                    startCarousel();
-                    return;
-                }
-
-                piscada = true;
-                tentarAdicionar();
-            });
-
-            function obterPalavraSelecionada() {
-                const box = document.querySelector('.palavra.selecionado');
-                if (!box) return null;
-                if (box.classList.contains('pular')) return null;
-                const p = box.querySelector('p');
-                const texto = p ? p.textContent.trim() : '';
-                return texto || null;
-            }
-
-            function tentarAdicionar() {
-                if (!piscada) return;
-                const texto = obterPalavraSelecionada();
-                if (texto) {
-                    let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
-                    lista.push(texto);
-                    localStorage.setItem('palavrasSelecionadas', JSON.stringify(lista));
-                    window.location.href = '../index.html';
-                }
-                piscada = false;
-                startCarousel();
+            if (btn) {
+                btn.addEventListener('click', window.handleTrigger);
             }
         });
 

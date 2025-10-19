@@ -121,6 +121,7 @@
         const itensPorColuna = 5;
         let index = 1;
         let timer = null;
+        let piscada = false;
 
         function limparDestaques() {
             for (let i = 1; i <= total; i++) {
@@ -147,60 +148,62 @@
             }, 3200);
         }
 
+        function obterPalavraSelecionada() {
+            const box = document.querySelector('.palavra.selecionado');
+            if (!box) return null;
+            if (box.classList.contains('pular')) return null;
+            const p = box.querySelector('p');
+            const texto = p ? p.textContent.trim() : '';
+            return texto || null;
+        }
+
+        function tentarAdicionar() {
+            if (!piscada) return;
+            const texto = obterPalavraSelecionada();
+            if (texto) {
+                let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
+                lista.push(texto);
+                localStorage.setItem('palavrasSelecionadas', JSON.stringify(lista));
+                window.location.href = '../index.html';
+            }
+            piscada = false;
+            startCarousel();
+        }
+
+        // 🔥 Função global que o backend vai chamar
+        window.handleTrigger = function () {
+            const selecionada = document.querySelector('.palavra.selecionado');
+            if (!selecionada) return;
+
+            const id = selecionada.id || '';
+            const num = parseInt(id.replace(/^p/, ''), 10);
+            if (!Number.isFinite(num)) return;
+
+            if (timer) clearInterval(timer);
+
+            if (selecionada.classList.contains('pular')) {
+                const colAtual = Math.floor((num - 1) / itensPorColuna);
+                const totalColunas = Math.ceil(total / itensPorColuna);
+                const proxCol = (colAtual + 1) % totalColunas;
+                let novoIndex = proxCol * itensPorColuna + 1;
+                if (novoIndex > total) novoIndex = 1;
+                gotoIndex(novoIndex);
+                startCarousel();
+                return;
+            }
+
+            piscada = true;
+            tentarAdicionar();
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
             gotoIndex(1);
             startCarousel();
 
-            let piscada = false;
-
+            // botão físico ou simulado também chama handleTrigger
             const btn = document.getElementById('btn-piscada') || document.querySelector('button');
-            if (!btn) return;
-
-            btn.addEventListener('click', () => {
-                const selecionada = document.querySelector('.palavra.selecionado');
-                if (!selecionada) return;
-
-                const id = selecionada.id || '';
-                const num = parseInt(id.replace(/^p/, ''), 10);
-                if (!Number.isFinite(num)) return;
-
-                if (timer) clearInterval(timer);
-
-                if (selecionada.classList.contains('pular')) {
-                    const colAtual = Math.floor((num - 1) / itensPorColuna);
-                    const totalColunas = Math.ceil(total / itensPorColuna);
-                    const proxCol = (colAtual + 1) % totalColunas;
-                    let novoIndex = proxCol * itensPorColuna + 1;
-                    if (novoIndex > total) novoIndex = 1;
-                    gotoIndex(novoIndex);
-                    startCarousel();
-                    return;
-                }
-
-                piscada = true;
-                tentarAdicionar();
-            });
-
-            function obterPalavraSelecionada() {
-                const box = document.querySelector('.palavra.selecionado');
-                if (!box) return null;
-                if (box.classList.contains('pular')) return null;
-                const p = box.querySelector('p');
-                const texto = p ? p.textContent.trim() : '';
-                return texto || null;
-            }
-
-            function tentarAdicionar() {
-                if (!piscada) return;
-                const texto = obterPalavraSelecionada();
-                if (texto) {
-                    let lista = JSON.parse(localStorage.getItem('palavrasSelecionadas') || '[]');
-                    lista.push(texto);
-                    localStorage.setItem('palavrasSelecionadas', JSON.stringify(lista));
-                    window.location.href = '../index.html';
-                }
-                piscada = false;
-                startCarousel();
+            if (btn) {
+                btn.addEventListener('click', window.handleTrigger);
             }
         });
 
